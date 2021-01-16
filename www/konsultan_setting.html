@@ -17,6 +17,7 @@
   <link href="css/style.css" rel="stylesheet" type="text/css">
   <script src="js/jq.js"></script>
   <script src="js/fastclick.js"></script>
+  <script src="js/sweetalert.min.js"></script>
   <script type="text/javascript">
 
     var url = window.location.pathname;
@@ -32,7 +33,6 @@
       window.location.href = "login.html";
     }
   </script>
-  <script src="js/sweetalert.min.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
 
   <script type="text/javascript" src="js/iscroll.js"></script>
@@ -122,19 +122,17 @@
           </div>
         </div>
 
-        <a href="javascript:logout()">
-          <div class="card waves-effect waves-rippleanimated fadein delay-1  sound-click">
-            <div class="c-widget">
-              <div class="c-widget-figure ">
-                <i class="fal fa-unlock"></i>
-              </div>
-              <div class="c-widget-body">
-                <p class="m-0"><strong>Logout</strong></p>
-                <p class="small m-0">Keluar dari aplikasi sekarang</p>
-              </div>
+        <div onclick="logout();" class="card waves-effect waves-rippleanimated fadein delay-1  sound-click">
+          <div class="c-widget">
+            <div class="c-widget-figure ">
+              <i class="fal fa-unlock"></i>
+            </div>
+            <div class="c-widget-body">
+              <p class="m-0"><strong>Logout</strong></p>
+              <p class="small m-0">Keluar dari aplikasi sekarang</p>
             </div>
           </div>
-        </a>
+        </div>
 
       </div><br><br>
       <div class="steps-controllers">
@@ -160,6 +158,54 @@
     <script src="js/masonry.min.js"></script>
     <script src="js/chart.min.js"></script>
     <script src="js/functions.js"></script>
+
+    <script>
+
+      // logout
+      function logout() {
+        swal("Apakah anda yakin ingin keluar dari aplikasi ini", {
+          buttons: {
+            cancel: "Batal",
+            catch: {
+              text: "Keluar",
+              value: "catch",
+            }
+          },
+        })
+          .then((value) => {
+            switch (value) {
+              case "catch":
+                var urls = "https://www.dfunstation.com/api4/consultant/index.php/konsultasi/delete-device/" + localStorage.userid + "/?callback=?";
+                $.ajax({
+                  type: "GET",
+                  url: urls,
+                  crossDomain: true,
+                  cache: false,
+                  success: function (data) {
+                    if (data['status'] == "OK") {
+                      localStorage.removeItem('login');
+                      localStorage.removeItem('email');
+                      localStorage.removeItem('userid');
+                      localStorage.removeItem('userfullname');
+                      localStorage.removeItem('avatar');
+                      localStorage.removeItem('deviceid');
+                      localStorage.removeItem('verification_need');
+                      localStorage.removeItem('verification');
+                      localStorage.removeItem('verification_until');
+                      localStorage.removeItem('usia18');
+                      localStorage.clear();
+                      slide("login.html");
+                    }
+                  }
+                });
+                break;
+              default:
+            }
+
+          });
+      }
+
+    </script>
 
 </body>
 

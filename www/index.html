@@ -124,9 +124,7 @@
                 switch (value) {
 
                   case "catch":
-
-
-                    var urls = "https://www.dfunstation.com/api4/consultant/index.php/konsultasi/chat-status/" + localStorage.userid + "/?callback=?";
+                    var urls = "https://www.dfunstation.com/api4/consultant/index.php/konsultasi/chat-status-tes/" + localStorage.userid + "/?callback=?";
                     $.ajax({
                       type: "GET",
                       url: urls,
@@ -140,12 +138,8 @@
                         }
                       }
                     });
-
-
                     break;
-
                   default:
-
                 }
               });
             //fade('chat-mulai.html?action=read&userid="+userid+"'
